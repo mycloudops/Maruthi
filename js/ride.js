@@ -1,11 +1,11 @@
-/*global WildRydes _config*/
+/*global UATMANAGEMENT _config*/
 
-var WildRydes = window.WildRydes || {};
-WildRydes.map = WildRydes.map || {};
+var UATMANAGEMENT = window.UATMANAGEMENT || {};
+UATMANAGEMENT.map = UATMANAGEMENT.map || {};
 
 (function rideScopeWrapper($) {
     var authToken;
-    WildRydes.authToken.then(function setAuthToken(token) {
+    UATMANAGEMENT.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         } else {
@@ -15,27 +15,46 @@ WildRydes.map = WildRydes.map || {};
         alert(error);
         window.location.href = '/signin.html';
     });
-    function requestUnicorn(pickupLocation) {
+    function requestStart() {
         $.ajax({
-            method: 'POST',
+            method: 'GET',
             url: _config.api.invokeUrl + '/',
             headers: {
                 Authorization: authToken
             },
-            data: JSON.stringify({
-                PickupLocation: {
-                    Latitude: pickupLocation.latitude,
-                    Longitude: pickupLocation.longitude
-                }
-            }),
             contentType: 'application/json',
-            success: completeRequest,
-            error: function ajaxError(jqXHR, textStatus, errorThrown) {
-                console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
-                console.error('Response: ', jqXHR.responseText);
-                alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
+            success: function(response) {
+                 var trHTML = '';
+        $.each(response, function (i, item) {
+            trHTML += '<tr><td>' + item.ECS_ServiceName + '</td><td>' + item.Task_DesiredCount + '</td><td>' + item.Task_RunningCount + '</td></tr>';
+        });
+        $('#output').append(trHTML);
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                alert("error occurred while get data");
             }
         });
+    }
+    $(function onDocReady() {
+        $('#requestStatus').click(handleRequestClick);
+        UATMANAGEMENT.authToken.then(function updateAuthMessage(token) {
+            if (token) {
+                displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
+                $('.authToken').text(token);
+            }
+        });
+        if (!_config.api.invokeUrl) {
+            $('#noApiMessage').show();
+        }
+    });
+    function handleRequestClick() {
+        requestStart();
+    }
+    function displayUpdate(text) {
+        $('#updates').append($('<h1 style="text-align:center;">UAT MANAGEMENT</h1>'));
+    }
+    function displayOutput(response) {
+        $('#output').append($('<h1 style="text-align:left;">' + response + '</h1>'));
     }
 }(jQuery));
 
