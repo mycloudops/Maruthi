@@ -4,6 +4,18 @@ var UATMANAGEMENT = window.UATMANAGEMENT || {};
 UATMANAGEMENT.map = UATMANAGEMENT.map || {};
 
 (function rideScopeWrapper($) {
+
+    var poolData = {
+        UserPoolId: _config.cognito.userPoolId,
+        ClientId: _config.cognito.userPoolClientId
+    };
+    var userPool;
+    userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    
+    function signOut(){ 
+        var cognitoUser = userPool.getCurrentUser();
+        cognitoUser.signOut();
+    }
     var authToken;
     UATMANAGEMENT.authToken.then(function setAuthToken(token) {
         if (token) {
@@ -97,12 +109,7 @@ function completeRequest(result) {
         $('#requestStatus').click(handleRequestStatusClick);
         $('#startRequest').click(handleRequestStartClick);
         $('#requestStop').click(handleRequestStopClick);
-        UATMANAGEMENT.authToken.then(function updateAuthMessage(token) {
-            if (token) {
-                displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
-                $('.authToken').text(token);
-            }
-        });
+        $('#signOut').click(handleSignOut);
         if (!_config.api.invokeUrl) {
             $('#noApiMessage').show();
         }
@@ -116,10 +123,7 @@ function completeRequest(result) {
     function handleRequestStopClick() {
         requestStop();
     }
-    function displayUpdate(text) {
-        $('#updates').append($('<h1 style="text-align:center;">UAT MANAGEMENT</h1>'));
-    }
-    function displayOutput(response) {
-        $('#output').append($('<h1 style="text-align:left;">' + response + '</h1>'));
+    function handleSignOut(){
+          signOut();
     }
 }(jQuery));
