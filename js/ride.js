@@ -22,19 +22,24 @@ UATMANAGEMENT.map = UATMANAGEMENT.map || {};
             headers: {
                 Authorization: authToken
             },
+            cache: false,
             contentType: 'application/json',
-            success: function(response) {
-                 var trHTML = '';
-        $.each(response, function (i, item) {
-            trHTML += '<tr><td>' + item.ECS_ServiceName + '</td><td>' + item.Task_DesiredCount + '</td><td>' + item.Task_RunningCount + '</td></tr>';
-        });
-        $('#output').append(trHTML);
-            },
+            success: completeRequest,
              error: function (jqXHR, textStatus, errorThrown) {
                 alert("error occurred while get data");
             }
         });
     }
+    function completeRequest(result) {
+         var table = '';
+         var trHTML = '';
+         table += '<table class="table table-bordered table-striped" id=table><tr><th>ECS_ServiceName</th><th>Task_DesiredCount</th><th>Task_RunningCount</th></tr></table>'
+        $.each(result, function (i, item) {
+            trHTML += '<tr><td>' + item.ECS_ServiceName + '</td><td>' + item.Task_DesiredCount + '</td><td>' + item.Task_RunningCount + '</td></tr>';
+        });
+        $('#output').append(table);
+        $('#table').append(trHTML);
+        }          
     $(function onDocReady() {
         $('#requestStatus').click(handleRequestClick);
         UATMANAGEMENT.authToken.then(function updateAuthMessage(token) {

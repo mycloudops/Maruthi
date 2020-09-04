@@ -3,7 +3,7 @@
 var UATMANAGEMENT = window.UATMANAGEMENT || {};
 
 (function scopeWrapper($) {
-    var signinUrl = '/signin.html';
+    var signinUrl = '/index.html';
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
