@@ -37,9 +37,10 @@ UATMANAGEMENT.map = UATMANAGEMENT.map || {};
         $.each(result, function (i, item) {
             trHTML += '<tr><td>' + item.ECS_ServiceName + '</td><td>' + item.Task_DesiredCount + '</td><td>' + item.Task_RunningCount + '</td></tr>';
         });
+        $('#output').empty();
         $('#output').append(table);
-        $('#table').append(trHTML);
-        }          
+        $('#table').append(trHTML);        
+}
     $(function onDocReady() {
         $('#requestStatus').click(handleRequestClick);
         UATMANAGEMENT.authToken.then(function updateAuthMessage(token) {
