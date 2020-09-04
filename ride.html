@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Wild Rydes</title>
+    <title>UAT Management</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +23,6 @@
         <ol id="updates">
         </ol>
     </div>
-   </div>
 <div id="noApiMessage" class="configMessage" style="display: none;">
     <div class="backdrop"></div>
     <div class="panel panel-default">
@@ -37,20 +36,22 @@
         </div>
     </div>
 </div>
-    <div class="info panel panel-default">
-        <div class="panel-heading">
-            <button id="requestStatus" class="btn btn-primary">STATUS</button>
-            <button id="requestStart" class="btn btn-primary">START</button>
-            <button id="requestStop" class="btn btn-primary">STOP</button>
-            <div class="dropdown pull-right">
-                <button id="accountLink" class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Account <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="accountLink">
-                    <li><a id="signOut" href="#">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
+<div class="container">
+<button id="startRequest" style="margin-right:460px" class="btn btn-primary">START</button>
+<button id="requestStatus" style="margin-right:420px" class="btn btn-primary">STATUS</button>
+<button id="requestStop" class="btn btn-primary">STOP</button>
+</div>
+
+<div class="info panel panel-default">
+        <div class="dropdown pull-right">
+            <button id="accountLink" class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="accountLink">
+                <li><a id="signOut" href="#">Sign out</a></li>
+            </ul>
+    </div>
+</div>
 
     <div id="noCognitoMessage" class="configMessage" style="display: none;">
         <div class="backdrop"></div>
