@@ -9,11 +9,11 @@ UATMANAGEMENT.map = UATMANAGEMENT.map || {};
         if (token) {
             authToken = token;
         } else {
-            window.location.href = '/signin.html';
+            window.location.href = '/index.html';
         }
     }).catch(function handleTokenError(error) {
         alert(error);
-        window.location.href = '/signin.html';
+        window.location.href = '/index.html';
     });
     function requestStart() {
         $.ajax({
